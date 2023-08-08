@@ -23,7 +23,7 @@ namespace WebApp.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
-            IEnumerable<Product> objList = _productRepo.GetAll();
+            IEnumerable<Product> objList = _productRepo.GetAll(includeProperties:"Category").ToList();
 
             return View(objList);
         }
@@ -57,19 +57,39 @@ namespace WebApp.Areas.Admin.Controllers
                 string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
                 string productPath = Path.Combine(wwwRootPath, @"images\product");
 
+                if (!string.IsNullOrEmpty(product.ImageUrl))
+                {
+                    var oldImagePath = Path.Combine(wwwRootPath, product.ImageUrl.TrimStart('\\'));
+
+                    if(System.IO.File.Exists(oldImagePath))
+                        System.IO.File.Delete(oldImagePath);
+                }
+
                 using (var fileStream = new FileStream(Path.Combine(productPath, fileName), FileMode.Create))
                 {
                     file.CopyTo(fileStream);
                 }
 
-                product.ImageUrl = @"images\product" + fileName;
+                 product.ImageUrl = @"\images\product\" + fileName;
             }
 
             if (ModelState.IsValid)
             {
-                _productRepo.Add(product);
+                var tmpText = string.Empty;
+
+                if (product.Id == 0)
+                {
+                    _productRepo.Add(product);
+                    tmpText = "created";
+                }
+                else
+                {
+                    _productRepo.Update(product);
+                    tmpText = "updated";
+                }
+
                 _productRepo.Save();
-                TempData["success"] = "Product created successfully";
+                TempData["success"] = $"Product {tmpText} successfully";
                 return RedirectToAction("Index");
             }
             else

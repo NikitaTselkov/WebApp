@@ -25,6 +25,23 @@ namespace WebApp.DataAccess.Repository
 
         public void Update(Product product)
         {
+            //var objFromDb = _dbContext.Products.FirstOrDefault(p => p.Id == product.Id);
+            //if (objFromDb != null)
+            //{
+            //    objFromDb.Title = product.Title;
+            //    objFromDb.Description = product.Description;
+            //    objFromDb.ISBN = product.ISBN;
+            //    objFromDb.Price = product.Price;
+            //    objFromDb.Price100 = product.Price100;
+            //    objFromDb.Price50 = product.Price50;
+            //    objFromDb.ListPrice = product.ListPrice;
+            //    objFromDb.CategoryId = product.CategoryId;
+            //    objFromDb.Author = product.Author;
+
+            //    if (!string.IsNullOrEmpty(product.ImageUrl))
+            //        objFromDb.ImageUrl = product.ImageUrl;
+            //}
+
             _dbContext.Update(product);
         }
     }

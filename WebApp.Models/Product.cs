@@ -52,7 +52,6 @@ namespace WebApp.Models
         public Category Category { get; set; }
 
         [ValidateNever]
-        [AllowNull]
-        public string ImageUrl { get; set; }
+        public string ImageUrl { get; set; } = string.Empty;
     }
 }

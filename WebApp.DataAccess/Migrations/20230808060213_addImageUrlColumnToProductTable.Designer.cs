@@ -12,7 +12,7 @@ using WebApp.Data;
 namespace WebApp.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230807125814_addImageUrlColumnToProductTable")]
+    [Migration("20230808060213_addImageUrlColumnToProductTable")]
     partial class addImageUrlColumnToProductTable
     {
         /// <inheritdoc />
